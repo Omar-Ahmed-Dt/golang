@@ -21,6 +21,15 @@ import(
     "math"
 )
 
+
+/*
+you can add constant and variable declarations outside of any functions. And when you do that, that constant or variable is scoped to the entire code file instead of a specific function and is therefore available in all the functions of that file.
+*/
+const inflationRate = 2.5
+var p1 float64
+var p2 float64
+
+
 func main() {
 /* 
 main func, this also must be named main so that Go knows which code to execute when the app starts,
@@ -63,16 +72,84 @@ the Go runtime looks for the main() function in the main package to start the ex
     var expectedReturnRate float64
     fmt.Scan(&expectedReturnRate)
 
-    var years float64 = 10
+    var years float64 = 10  // this variable is scoped to the main func
 
     futureValue := investmentAmount * math.Pow ( 1 + expectedReturnRate / 100 , years )
 
-    const inflationRate = 2.5 
+    // const inflationRate = 2.5 
     futureRealValue := futureValue / math.Pow(1+inflationRate/100, years)
 
-    fmt.Println("Future Value: ", futureValue)
-    fmt.Println("Future Real Value: ",futureRealValue)
+    // outputs info: 
+    // 1- using println:
+    // fmt.Println("Future Value: ", futureValue)
+    // fmt.Println("Future Real Value: ",futureRealValue)
+    // or
+    // 2- using printf: 
+    fmt.Printf("Future Value: %v\nFuture Real Value: %v\n", futureValue, futureRealValue)
+    // %v : a placeholder to output the value
+    // \n : a new line
 
-    fmt.Printf("Future Vale: %v\nFuture Real Value: %v", futureValue, futureRealValue)
+    fmt.Printf("Future Value: %.2f\nFuture Real Value: %.1f\n", futureValue, futureRealValue)
+    // %.2f : how many decimal places you want output 4.78
 
+    fmt.Print("////////////////////////////////////////////////\n")
+
+    // Created Formatted Strings:
+    formattedFV := fmt.Sprintf("Future Value: %.2f\n", futureValue)
+    formattedRFV := fmt.Sprintf("Future Real Value: %.2f\n", futureRealValue)
+    fmt.Print(formattedFV, formattedRFV)
+
+    fmt.Print("////////////////////////////////////////////////\n")
+
+    // Building Multiline Strings using backtick: 
+    fmt.Printf(`Future Vale: %v\n
+    Future Real Value: %v\n`, futureValue, futureRealValue) 
+
+    fmt.Print("////////////////////////////////////////////////\n")
+
+    // Called funcTest:
+    printfuncText := funcTest(2,3)
+    fmt.Println(printfuncText)
+
+
+   // If Statements: 
+   var xif int 
+   fmt.Print("input xif value: ")
+   fmt.Scan(&xif)
+   if xif > 5 {
+		fmt.Println("xif is gt 5")
+	} else if xif > 10 {
+		fmt.Println("xif is gt 10")
+	} else {
+		fmt.Println("else case")
+	}
+
+    // Nested If statement
+    age := 26
+    if age > 18 {
+        if age >= 21 {
+            fmt.Println("You are an adult and can legally drink.")
+        } else {
+            fmt.Println("You are an adult but cannot legally drink.")
+        }
+    } else {
+        fmt.Println("You are a minor.")
+    }
+
+
+}
+
+// Functions:
+
+// func funcTest(text string)  inflationRate float64 {    
+
+    // text is a parameter for this func
+    // we need to specify the type for return variable: inflationRate float64
+    // we need to specify the type for the parameter: text string
+
+// func funcTest(text string) ( inflationRate float64, parameter valuetype, .... ) { 
+func funcTest(p1 float64 , p2 float64) (p3 float64) {
+    // Body Func:
+    p3 = p1 + p2
+    return p3
 }
